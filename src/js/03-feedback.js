@@ -18,24 +18,34 @@ feedbackForm.addEventListener(
 );
 
 window.addEventListener('load', () => {
-  const storedFormData = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
-  if (storedFormData) {
-    emailInput.value = storedFormData.email;
-    messageInput.value = storedFormData.message;
+  try {
+    const storedFormData = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+    if (storedFormData) {
+      emailInput.value = storedFormData.email;
+      messageInput.value = storedFormData.message;
+    }
+  } catch (error) {
+    console.log(error.name); // "SyntaxError"
+    console.log(error.message); // "Unexpected token u in JSON at position 0"
   }
 });
 
 feedbackForm.addEventListener('submit', event => {
   event.preventDefault();
 
-  const formData = {
-    email: emailInput.value,
-    message: messageInput.value,
-  };
+  if (emailInput.value === '' || messageInput.value === '') {
+    const alertMessage = 'Заповніть усі поля форми!';
+    alert(alertMessage);
+  } else {
+    const formData = {
+      email: emailInput.value,
+      message: messageInput.value,
+    };
+    console.log(formData);
 
-  console.log(formData);
-
-  localStorage.removeItem('feedback-form-state');
-  emailInput.value = '';
-  messageInput.value = '';
+    event.currentTarget.reset();
+    localStorage.removeItem(LOCALSTORAGE_KEY);
+    emailInput.value = '';
+    messageInput.value = '';
+  }
 });
