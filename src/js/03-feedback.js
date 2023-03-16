@@ -24,3 +24,18 @@ window.addEventListener('load', () => {
     messageInput.value = storedFormData.message;
   }
 });
+
+feedbackForm.addEventListener('submit', event => {
+  event.preventDefault();
+
+  const formData = {
+    email: emailInput.value,
+    message: messageInput.value,
+  };
+
+  console.log(formData);
+
+  localStorage.removeItem('feedback-form-state');
+  emailInput.value = '';
+  messageInput.value = '';
+});
