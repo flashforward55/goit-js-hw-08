@@ -16,3 +16,11 @@ feedbackForm.addEventListener(
     localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(formData));
   }, 500)
 );
+
+window.addEventListener('load', () => {
+  const storedFormData = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+  if (storedFormData) {
+    emailInput.value = storedFormData.email;
+    messageInput.value = storedFormData.message;
+  }
+});
